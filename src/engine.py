@@ -16,6 +16,11 @@ def main():
     map_width = 80
     map_height = 45
 
+    # Dungeon
+    room_max_size = 10
+    room_min_size = 6
+    max_rooms = 30
+
     # Map colors
     colors = {
         'dark_wall': libtcod.Color(0, 0, 100),
@@ -24,7 +29,7 @@ def main():
 
     # Init some entities
     player = Entity(int(screen_width / 2), int(screen_height / 2), '@', libtcod.white)
-    npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), '@', libtcod.yellow)
+    npc = Entity(int(screen_width / 2 - 4), int(screen_height / 2), '@', libtcod.yellow)
     entities = [npc, player]
 
     # Assign custom tileset/fonts & init console
@@ -34,6 +39,7 @@ def main():
     con = libtcod.console_new(screen_width, screen_height)
 
     game_map = GameMap(map_width, map_height)
+    game_map.make_map(max_rooms, room_min_size, room_max_size, map_width, map_height, player)
 
     # Mouse & keys infos
     key = libtcod.Key()
