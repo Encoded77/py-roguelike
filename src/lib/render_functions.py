@@ -57,7 +57,6 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
 
     # Draw all entities in the list
     entities_in_render_order = sorted(entities, key=lambda x: x.render_order.value)
-
     for entity in entities_in_render_order:
         draw_entity(con, entity, fov_map)
 

@@ -119,6 +119,7 @@ def main():
                     player.move(dx, dy)
                     fov_recompute = True
 
+                player.fighter.regenerate(1)
                 game_state = GameStates.ENEMY_TURN
 
         if exit:
