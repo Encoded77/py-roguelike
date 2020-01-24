@@ -82,6 +82,7 @@ def handle_inventory_keys(key):
     if key.vk == libtcod.KEY_ENTER and key.lalt:
         # Alt+Enter: toggle full screen
         return {'fullscreen': True}
+
     elif key.vk == libtcod.KEY_ESCAPE:
         # Exit the menu
         return {'exit': True}
@@ -95,8 +96,10 @@ def handle_level_up_menu(key):
 
         if key_char == 'a':
             return {'level_up': 'hp'}
+
         elif key_char == 'b':
             return {'level_up': 'str'}
+
         elif key_char == 'c':
             return {'level_up': 'def'}
 
@@ -106,6 +109,10 @@ def handle_level_up_menu(key):
 def handle_character_screen(key):
     if key.vk == libtcod.KEY_ESCAPE:
         return {'exit': True}
+
+    elif key.vk == libtcod.KEY_ENTER and key.lalt:
+        # Alt+Enter: toggle full screen
+        return {'fullscreen': True}
 
     return {}
 
@@ -119,6 +126,7 @@ def handle_player_dead_keys(key):
     if key.vk == libtcod.KEY_ENTER and key.lalt:
         # Alt+Enter: toggle full screen
         return {'fullscreen': True}
+
     elif key.vk == libtcod.KEY_ESCAPE:
         # Exit the menu
         return {'exit': True}
@@ -138,6 +146,7 @@ def handle_mouse(mouse):
 
     if mouse.lbutton_pressed:
         return {'left_click': (x, y)}
+
     elif mouse.rbutton_pressed:
         return {'right_click': (x, y)}
 
@@ -149,9 +158,15 @@ def handle_main_menu(key):
 
     if key_char == 'a':
         return {'new_game': True}
+
     elif key_char == 'b':
         return {'load_game': True}
+
     elif key_char == 'c' or key.vk == libtcod.KEY_ESCAPE:
         return {'exit': True}
+
+    elif key.vk == libtcod.KEY_ENTER and key.lalt:
+        # Alt+Enter: toggle full screen
+        return {'fullscreen': True}
 
     return {}
