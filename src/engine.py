@@ -99,12 +99,11 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             # Recompute fov map
             recompute_fov(fov_map, player.x, player.y, constants['fov_radius'], constants['fov_light_walls'], constants['fov_algorithm'])
 
-
         render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log, constants['screen_width'], constants['screen_height'],
                    constants['bar_width'], constants['panel_height'], constants['panel_y'], mouse, constants['colors'], game_state)
         fov_recompute = False
 
-        libtcod.console_flush() # Update window to display current state
+        libtcod.console_flush()  # Update window to display current state
         clear_all(con, entities)
 
         # Get actions from user inputs
@@ -115,6 +114,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         exit = action.get('exit')
         wait = action.get('wait')
         fullscreen = action.get('fullscreen')
+        take_stairs = action.get('take_stairs')
 
         pickup = action.get('pickup')
         show_inventory = action.get('show_inventory')
@@ -123,7 +123,6 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
         left_click = mouse_action.get('left_click')
         right_click = mouse_action.get('right_click')
-        
 
         # Keep tracks a players actions/results
         player_turn_results = []
@@ -149,7 +148,6 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         elif wait and game_state == GameStates.PLAYERS_TURN:
             player.fighter.heal(1)
             game_state = GameStates.ENEMY_TURN
-        
 
         elif pickup and game_state == GameStates.PLAYERS_TURN:
             for entity in entities:
@@ -161,36 +159,43 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             else:
                 message_log.add_message(Message('There is nothing here to pick up.', libtcod.yellow))
 
-
         if show_inventory and game_state != GameStates.SHOW_INVENTORY:
             previous_game_state = game_state
             game_state = GameStates.SHOW_INVENTORY
-
 
         if drop_inventory and game_state != GameStates.DROP_INVENTORY:
             previous_game_state = game_state
             game_state = GameStates.DROP_INVENTORY
 
-
         if inventory_index is not None and previous_game_state != GameStates.PLAYER_DEAD and inventory_index < len(
-                player.inventory.items): 
+                player.inventory.items):
             item = player.inventory.items[inventory_index]
             if game_state == GameStates.SHOW_INVENTORY:
                 player_turn_results.extend(player.inventory.use(item, entities=entities, fov_map=fov_map))
             elif game_state == GameStates.DROP_INVENTORY:
                 player_turn_results.extend(player.inventory.drop_item(item))
 
+        if take_stairs and game_state == GameStates.PLAYERS_TURN:
+            for entity in entities:
+                if entity.stairs and entity.x == player.x and entity.y == player.y:
+                    entities = game_map.next_floor(player, message_log, constants)
+                    fov_map = initialize_fov(game_map)
+                    fov_recompute = True
+                    libtcod.console_clear(con)
+
+                    break
+            else:
+                message_log.add_message(Message('There are no stairs here.', libtcod.yellow))
 
         if game_state == GameStates.TARGETING:
             if left_click:
                 target_x, target_y = left_click
-                
+
                 item_use_results = player.inventory.use(targeting_item, entities=entities, fov_map=fov_map,
                                                         target_x=target_x, target_y=target_y)
                 player_turn_results.extend(item_use_results)
             elif right_click:
                 player_turn_results.append({'targeting_cancelled': True})
-
 
         if exit:
             if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
@@ -201,13 +206,11 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 save_game(player, entities, game_map, message_log, game_state)
                 return True
 
-
         if fullscreen:
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
 
-
         for player_turn_result in player_turn_results:
-            
+
             message = player_turn_result.get('message')
             dead_entity = player_turn_result.get('dead')
             item_added = player_turn_result.get('item_added')
@@ -216,10 +219,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             targeting = player_turn_result.get('targeting')
             targeting_cancelled = player_turn_result.get('targeting_cancelled')
 
-
             if message:
                 message_log.add_message(message)
-
 
             if dead_entity:
                 if dead_entity == player:
@@ -231,21 +232,17 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
                 message_log.add_message(message)
 
-
             if item_added:
                 # Delete picked item from entity list
                 entities.remove(item_added)
                 game_state = GameStates.ENEMY_TURN
-            
 
             if item_consumed:
                 game_state = GameStates.ENEMY_TURN
 
-
             if item_dropped:
                 entities.append(item_dropped)
                 game_state = GameStates.ENEMY_TURN
-
 
             if targeting:
                 previous_game_state = GameStates.PLAYERS_TURN
@@ -255,11 +252,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
                 message_log.add_message(targeting_item.item.targeting_message)
 
-
             if targeting_cancelled:
                 game_state = previous_game_state
                 message_log.add_message(Message('Targeting cancelled !'))
-
 
         # ENEMY TURN
         if game_state == GameStates.ENEMY_TURN:
@@ -290,6 +285,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                         break
             else:
                 game_state = GameStates.PLAYERS_TURN
+
 
 if __name__ == '__main__':
     main()

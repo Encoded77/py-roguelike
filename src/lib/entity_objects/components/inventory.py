@@ -2,6 +2,7 @@ import tcod as libtcod
 
 from lib.game_messages import Message
 
+
 class Inventory:
     def __init__(self, capacity):
         self.capacity = capacity
@@ -24,7 +25,7 @@ class Inventory:
             self.items.append(item)
 
         return results
-    
+
     def use(self, item_entity, **kwargs):
         results = []
 
@@ -50,7 +51,6 @@ class Inventory:
     def remove_item(self, item):
         self.items.remove(item)
 
-    
     def drop_item(self, item):
         results = []
 

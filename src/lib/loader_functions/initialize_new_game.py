@@ -1,7 +1,7 @@
 import tcod as libtcod
 
 from lib.game_states import GameStates
-from lib.game_messages import Message, MessageLog
+from lib.game_messages import MessageLog
 from lib.render_functions import RenderOrder
 from lib.map_objects.game_map import GameMap
 from lib.entity_objects.entity import Entity
