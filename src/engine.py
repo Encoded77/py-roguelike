@@ -54,7 +54,8 @@ def main():
     fighter_component = Fighter(hp=30, defense=2, power=5)
     inventory_component = Inventory(26)
     player = Entity(int(screen_width / 2), int(screen_height / 2), '@', libtcod.white, 'Player', 
-                    render_order=RenderOrder.ACTOR, fighter=fighter_component, inventory=inventory_component)
+                    render_order=RenderOrder.ACTOR, fighter=fighter_component, inventory=inventory_component,
+                    blocks=True)
     entities = [player]
 
     # Assign custom tileset/fonts & init console
