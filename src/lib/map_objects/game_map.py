@@ -36,6 +36,8 @@ class GameMap:
         center_of_last_room_y = None
 
         for r in range(max_rooms):
+            r  # r is here to stop linting errors
+
             # random width and height
             w = randint(room_min_size, room_max_size)
             h = randint(room_min_size, room_max_size)
@@ -128,6 +130,8 @@ class GameMap:
         number_of_items = randint(0, max_items_per_room)
 
         for i in range(number_of_monsters):
+            i  # i is here to stop linting errors
+
             # Choose a random location in the room
             x = randint(room.x1 + 1, room.x2 - 1)
             y = randint(room.y1 + 1, room.y2 - 1)

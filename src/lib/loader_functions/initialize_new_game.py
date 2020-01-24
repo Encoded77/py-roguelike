@@ -5,6 +5,7 @@ from lib.game_messages import MessageLog
 from lib.render_functions import RenderOrder
 from lib.map_objects.game_map import GameMap
 from lib.entity_objects.entity import Entity
+from lib.entity_objects.components.level import Level
 from lib.entity_objects.components.fighter import Fighter
 from lib.entity_objects.components.inventory import Inventory
 
@@ -34,6 +35,9 @@ def get_constants():
     fov_light_walls = True
     fov_radius = 10
 
+    level_up_base = 200
+    level_up_factor = 150
+
     max_monsters_per_room = 3
     max_items_per_room = 2
 
@@ -62,6 +66,8 @@ def get_constants():
         'fov_algorithm': fov_algorithm,
         'fov_light_walls': fov_light_walls,
         'fov_radius': fov_radius,
+        'level_up_base': level_up_base,
+        'level_up_factor': level_up_factor,
         'max_monsters_per_room': max_monsters_per_room,
         'max_items_per_room': max_items_per_room,
         'colors': colors
@@ -71,12 +77,15 @@ def get_constants():
 
 
 def get_game_variables(constants):
+    # Player creation
     fighter_component = Fighter(hp=30, defense=2, power=5)
     inventory_component = Inventory(26)
+    level = Level(level_up_base=constants['level_up_base'], level_up_factor=constants['level_up_factor'])
     player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR,
-                    fighter=fighter_component, inventory=inventory_component)
+                    fighter=fighter_component, inventory=inventory_component, level=level)
     entities = [player]
 
+    # Map creation
     game_map = GameMap(constants['map_width'], constants['map_height'])
     game_map.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],
                       constants['map_width'], constants['map_height'], player, entities,
