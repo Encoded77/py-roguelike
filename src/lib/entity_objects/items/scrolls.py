@@ -1,7 +1,7 @@
 import tcod as libtcod
 
 from lib.game_messages import Message
-from lib.render_functions import RenderOrder
+from lib.enums.render_order import RenderOrder
 from lib.entity_objects.entity import Entity
 from lib.entity_objects.components.item import Item
 from lib.item_functions import cast_fireball, cast_confuse, cast_lightning

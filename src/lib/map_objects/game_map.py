@@ -1,9 +1,10 @@
 import tcod as libtcod
-
 from random import randint
+
+
 from lib.game_messages import Message
 from lib.map_objects.tile import Tile
-from lib.render_functions import RenderOrder
+from lib.enums.render_order import RenderOrder
 from lib.utils.random import random_choice_from_dict, from_dungeon_level
 from lib.entity_objects.entity import Entity
 from lib.map_objects.rectangle import Rect

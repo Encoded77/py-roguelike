@@ -1,8 +1,8 @@
 import tcod as libtcod
 
-from lib.game_states import GameStates
+from lib.enums.game_states import GameStates
 from lib.game_messages import MessageLog
-from lib.render_functions import RenderOrder
+from lib.enums.render_order import RenderOrder
 from lib.map_objects.game_map import GameMap
 from lib.entity_objects.entity import Entity
 from lib.entity_objects.components.level import Level

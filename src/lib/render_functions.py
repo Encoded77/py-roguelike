@@ -1,15 +1,7 @@
 import tcod as libtcod
-from enum import Enum, auto
 
-from lib.game_states import GameStates
+from lib.enums.game_states import GameStates
 from lib.menus import inventory_menu, level_up_menu, character_screen
-
-
-class RenderOrder(Enum):
-    STAIRS = auto()
-    CORPSE = auto()
-    ITEM = auto()
-    ACTOR = auto()
 
 
 def get_names_under_mouse(mouse, entities, fov_map):

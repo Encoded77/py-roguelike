@@ -3,7 +3,7 @@ import tcod as libtcod
 
 # imports
 from lib.menus import main_menu, message_box
-from lib.game_states import GameStates
+from lib.enums.game_states import GameStates
 from lib.game_messages import Message
 from lib.fov_functions import initialize_fov, recompute_fov
 from lib.input_handlers import handle_keys, handle_mouse, handle_main_menu
@@ -72,7 +72,7 @@ def main():
                     show_load_error_message = True
 
             elif fullscreen:
-                libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())  
+                libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
 
             elif exit_game:
                 break

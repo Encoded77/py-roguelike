@@ -3,7 +3,7 @@ import tcod as libtcod
 from lib.entity_objects.entity import Entity
 from lib.entity_objects.components.ai import BasicMonster
 from lib.entity_objects.components.fighter import Fighter
-from lib.render_functions import RenderOrder
+from lib.enums.render_order import RenderOrder
 
 
 def create_troll(x, y):
