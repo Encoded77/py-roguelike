@@ -19,9 +19,6 @@ from lib.entity_objects.items.scrolls import fireball_scroll, confusion_scroll, 
 from lib.entity_objects.items.weapons import sword, axe
 from lib.entity_objects.items.shields import shield
 
-from lib.enums.equipment_slots import EquipmentSlots
-from lib.entity_objects.components.equippable import Equippable
-
 
 class GameMap:
     def __init__(self, width, height, dungeon_level=1):
@@ -202,7 +199,7 @@ class GameMap:
                     item = axe(x, y)
 
                 elif item_choice == 'shield':
-                    item = axe(x, y)
+                    item = shield(x, y)
 
                 entities.append(item)
 
