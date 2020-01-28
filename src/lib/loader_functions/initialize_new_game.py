@@ -1,13 +1,18 @@
 import tcod as libtcod
 
-from lib.enums.game_states import GameStates
 from lib.game_messages import MessageLog
-from lib.enums.render_order import RenderOrder
 from lib.map_objects.game_map import GameMap
 from lib.entity_objects.entity import Entity
+
+from lib.enums.game_states import GameStates
+from lib.enums.render_order import RenderOrder
+
 from lib.entity_objects.components.level import Level
 from lib.entity_objects.components.fighter import Fighter
+from lib.entity_objects.components.equipment import Equipment
 from lib.entity_objects.components.inventory import Inventory
+
+from lib.entity_objects.items.weapons import dagger
 
 
 def get_constants():
@@ -78,12 +83,19 @@ def get_constants():
 
 def get_game_variables(constants):
     # Player creation
-    fighter_component = Fighter(hp=100, defense=1, power=4)
+    fighter_component = Fighter(hp=100, defense=1, power=3)
     inventory_component = Inventory(26)
+    equipment_component = Equipment()
+
     level = Level(level_up_base=constants['level_up_base'], level_up_factor=constants['level_up_factor'])
     player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR,
-                    fighter=fighter_component, inventory=inventory_component, level=level)
+                    fighter=fighter_component, inventory=inventory_component, level=level, equipment=equipment_component)
     entities = [player]
+
+    starter_weapon = dagger(0, 0)
+
+    player.inventory.add_item(starter_weapon)
+    player.equipment.toggle_equip(starter_weapon)
 
     # Map creation
     game_map = GameMap(constants['map_width'], constants['map_height'])

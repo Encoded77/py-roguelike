@@ -1,10 +1,11 @@
-from equipment_slots import EquipmentSlots
+from lib.enums.equipment_slots import EquipmentSlots
 
 
 class Equipment:
     """
-    Equipement 'inventory'
-    List all currently equipped items & empty slots
+                        Equipement 'inventory'
+            List all currently equipped items & empty slots
+            Has method & properties to toggle equipments & show bonuses
     """
     def __init__(self, main_hand=None, off_hand=None, head=None,
                  body=None, legs=None, finger_1=None, finger_2=None):
@@ -26,6 +27,21 @@ class Equipment:
         if self.off_hand and self.off_hand.equippable:
             bonus += self.off_hand.equippable.max_hp_bonus
 
+        if self.head and self.head.equippable:
+            bonus += self.head.equippable.max_hp_bonus
+
+        if self.body and self.body.equippable:
+            bonus += self.body.equippable.max_hp_bonus
+
+        if self.legs and self.legs.equippable:
+            bonus += self.legs.equippable.max_hp_bonus
+
+        if self.finger_1 and self.finger_1.equippable:
+            bonus += self.finger_1.equippable.max_hp_bonus
+
+        if self.finger_2 and self.finger_2.equippable:
+            bonus += self.finger_2.equippable.max_hp_bonus
+
         return bonus
 
     @property
@@ -38,6 +54,21 @@ class Equipment:
         if self.off_hand and self.off_hand.equippable:
             bonus += self.off_hand.equippable.power_bonus
 
+        if self.head and self.head.equippable:
+            bonus += self.head.equippable.power_bonus
+
+        if self.body and self.body.equippable:
+            bonus += self.body.equippable.power_bonus
+
+        if self.legs and self.legs.equippable:
+            bonus += self.legs.equippable.power_bonus
+
+        if self.finger_1 and self.finger_1.equippable:
+            bonus += self.finger_1.equippable.power_bonus
+
+        if self.finger_2 and self.finger_2.equippable:
+            bonus += self.finger_2.equippable.power_bonus
+
         return bonus
 
     @property
@@ -49,6 +80,21 @@ class Equipment:
 
         if self.off_hand and self.off_hand.equippable:
             bonus += self.off_hand.equippable.defense_bonus
+
+        if self.head and self.head.equippable:
+            bonus += self.head.equippable.defense_bonus
+
+        if self.body and self.body.equippable:
+            bonus += self.body.equippable.defense_bonus
+
+        if self.legs and self.legs.equippable:
+            bonus += self.legs.equippable.defense_bonus
+
+        if self.finger_1 and self.finger_1.equippable:
+            bonus += self.finger_1.equippable.defense_bonus
+
+        if self.finger_2 and self.finger_2.equippable:
+            bonus += self.finger_2.equippable.defense_bonus
 
         return bonus
 

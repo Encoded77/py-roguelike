@@ -8,11 +8,19 @@ from lib.enums.render_order import RenderOrder
 from lib.utils.random import random_choice_from_dict, from_dungeon_level
 from lib.entity_objects.entity import Entity
 from lib.map_objects.rectangle import Rect
+
 from lib.entity_objects.components.stairs import Stairs
+
 from lib.entity_objects.monsters.orcs import create_orc
 from lib.entity_objects.monsters.trolls import create_troll
+
 from lib.entity_objects.items.potions import healing_potion
 from lib.entity_objects.items.scrolls import fireball_scroll, confusion_scroll, lightning_scroll
+from lib.entity_objects.items.weapons import sword, axe
+from lib.entity_objects.items.shields import shield
+
+from lib.enums.equipment_slots import EquipmentSlots
+from lib.entity_objects.components.equippable import Equippable
 
 
 class GameMap:
@@ -140,9 +148,12 @@ class GameMap:
         }
 
         item_chances = {
-            'healing_potion': 35,
-            'lightning_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
-            'fireball_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
+            'healing_potion': 20,
+            'sword': from_dungeon_level([[8, 2]], self.dungeon_level),
+            'axe': from_dungeon_level([[8, 4]], self.dungeon_level),
+            'shield': from_dungeon_level([[15, 8]], self.dungeon_level),
+            'lightning_scroll': from_dungeon_level([[20, 4]], self.dungeon_level),
+            'fireball_scroll': from_dungeon_level([[20, 6]], self.dungeon_level),
             'confusion_scroll': from_dungeon_level([[10, 2]], self.dungeon_level)
         }
 
@@ -183,6 +194,15 @@ class GameMap:
 
                 elif item_choice == 'lightning_scroll':
                     item = lightning_scroll(x, y)
+
+                elif item_choice == 'sword':
+                    item = sword(x, y)
+
+                elif item_choice == 'axe':
+                    item = axe(x, y)
+
+                elif item_choice == 'shield':
+                    item = axe(x, y)
 
                 entities.append(item)
 
