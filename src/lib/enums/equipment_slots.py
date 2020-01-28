@@ -7,5 +7,4 @@ class EquipmentSlots(Enum):
     HEAD = auto()
     BODY = auto()
     LEGS = auto()
-    FINGER_1 = auto()
-    FINGER_2 = auto()
+    FINGER = auto()

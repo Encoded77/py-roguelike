@@ -19,6 +19,11 @@ from lib.entity_objects.items.scrolls import fireball_scroll, confusion_scroll, 
 from lib.entity_objects.items.weapons import sword, axe
 from lib.entity_objects.items.shields import shield
 
+from lib.entity_objects.items.helmets import leather_helmet, iron_helmet
+from lib.entity_objects.items.body import leather_armor, iron_armor
+from lib.entity_objects.items.legs import leather_pants, iron_pants
+from lib.entity_objects.items.rings import iron_ring_force, iron_ring_life
+
 
 class GameMap:
     def __init__(self, width, height, dungeon_level=1):
@@ -146,9 +151,23 @@ class GameMap:
 
         item_chances = {
             'healing_potion': 20,
+
             'sword': from_dungeon_level([[8, 2]], self.dungeon_level),
             'axe': from_dungeon_level([[8, 4]], self.dungeon_level),
+
             'shield': from_dungeon_level([[15, 8]], self.dungeon_level),
+
+            'leather_helmet': from_dungeon_level([[7, 7]], self.dungeon_level),
+            'leather_armor': from_dungeon_level([[7, 7]], self.dungeon_level),
+            'leather_pants': from_dungeon_level([[7, 7]], self.dungeon_level),
+
+            'iron_helmet': from_dungeon_level([[4, 14]], self.dungeon_level),
+            'iron_armor': from_dungeon_level([[4, 14]], self.dungeon_level),
+            'iron_pants': from_dungeon_level([[4, 14]], self.dungeon_level),
+
+            'iron_ring_force': from_dungeon_level([[1, 0]], self.dungeon_level),
+            'iron_ring_life': from_dungeon_level([[1, 0]], self.dungeon_level),
+
             'lightning_scroll': from_dungeon_level([[20, 4]], self.dungeon_level),
             'fireball_scroll': from_dungeon_level([[20, 6]], self.dungeon_level),
             'confusion_scroll': from_dungeon_level([[10, 2]], self.dungeon_level)
@@ -180,9 +199,13 @@ class GameMap:
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
                 item_choice = random_choice_from_dict(item_chances)
 
+                print(item_choice)
+
+                # Potions
                 if item_choice == 'healing_potion':
                     item = healing_potion(x, y)
 
+                # Scrolls
                 elif item_choice == 'fireball_scroll':
                     item = fireball_scroll(x, y)
 
@@ -192,14 +215,43 @@ class GameMap:
                 elif item_choice == 'lightning_scroll':
                     item = lightning_scroll(x, y)
 
+                # Weapons
                 elif item_choice == 'sword':
                     item = sword(x, y)
 
                 elif item_choice == 'axe':
                     item = axe(x, y)
 
+                # Shields
                 elif item_choice == 'shield':
                     item = shield(x, y)
+
+                # Leather armor
+                elif item_choice == 'leather_helmet':
+                    item = leather_helmet(x, y)
+
+                elif item_choice == 'leather_armor':
+                    item = leather_armor(x, y)
+
+                elif item_choice == 'leather_pants':
+                    item = leather_pants(x, y)
+
+                # Iron armor
+                elif item_choice == 'iron_helmet':
+                    item = iron_helmet(x, y)
+
+                elif item_choice == 'iron_armor':
+                    item = iron_armor(x, y)
+
+                elif item_choice == 'iron_pants':
+                    item = iron_pants(x, y)
+
+                # Rings
+                elif item_choice == 'iron_ring_force':
+                    item = iron_ring_force(x, y)
+
+                elif item_choice == 'iron_ring_life':
+                    item = iron_ring_life(x, y)
 
                 entities.append(item)
 

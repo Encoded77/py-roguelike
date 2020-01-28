@@ -8,14 +8,13 @@ class Equipment:
             Has method & properties to toggle equipments & show bonuses
     """
     def __init__(self, main_hand=None, off_hand=None, head=None,
-                 body=None, legs=None, finger_1=None, finger_2=None):
+                 body=None, legs=None, finger=None):
         self.main_hand = main_hand
         self.off_hand = off_hand
         self.head = head
         self.body = body
         self.legs = legs
-        self.finger_1 = finger_1
-        self.finger_2 = finger_2
+        self.finger = finger
 
     @property
     def max_hp_bonus(self):
@@ -36,11 +35,8 @@ class Equipment:
         if self.legs and self.legs.equippable:
             bonus += self.legs.equippable.max_hp_bonus
 
-        if self.finger_1 and self.finger_1.equippable:
-            bonus += self.finger_1.equippable.max_hp_bonus
-
-        if self.finger_2 and self.finger_2.equippable:
-            bonus += self.finger_2.equippable.max_hp_bonus
+        if self.finger and self.finger.equippable:
+            bonus += self.finger.equippable.max_hp_bonus
 
         return bonus
 
@@ -63,11 +59,8 @@ class Equipment:
         if self.legs and self.legs.equippable:
             bonus += self.legs.equippable.power_bonus
 
-        if self.finger_1 and self.finger_1.equippable:
-            bonus += self.finger_1.equippable.power_bonus
-
-        if self.finger_2 and self.finger_2.equippable:
-            bonus += self.finger_2.equippable.power_bonus
+        if self.finger and self.finger.equippable:
+            bonus += self.finger.equippable.power_bonus
 
         return bonus
 
@@ -90,11 +83,8 @@ class Equipment:
         if self.legs and self.legs.equippable:
             bonus += self.legs.equippable.defense_bonus
 
-        if self.finger_1 and self.finger_1.equippable:
-            bonus += self.finger_1.equippable.defense_bonus
-
-        if self.finger_2 and self.finger_2.equippable:
-            bonus += self.finger_2.equippable.defense_bonus
+        if self.finger and self.finger.equippable:
+            bonus += self.finger.equippable.defense_bonus
 
         return bonus
 
@@ -174,32 +164,18 @@ class Equipment:
                 self.legs = equippable_entity
                 results.append({'equipped': equippable_entity})
 
-        if slot == EquipmentSlots.FINGER_1:
+        if slot == EquipmentSlots.FINGER:
             # De-equip item if its already on
-            if self.finger_1 == equippable_entity:
-                self.finger_1 = None
+            if self.finger == equippable_entity:
+                self.finger = None
                 results.append({'dequipped': equippable_entity})
             else:
-                if self.finger_1:
+                if self.finger:
                     # De-equip previous items
-                    results.append({'dequipped': self.finger_1})
+                    results.append({'dequipped': self.finger})
 
                 # Equip new item
-                self.finger_1 = equippable_entity
-                results.append({'equipped': equippable_entity})
-
-        if slot == EquipmentSlots.FINGER_2:
-            # De-equip item if its already on
-            if self.finger_2 == equippable_entity:
-                self.finger_2 = None
-                results.append({'dequipped': equippable_entity})
-            else:
-                if self.finger_2:
-                    # De-equip previous items
-                    results.append({'dequipped': self.finger_2})
-
-                # Equip new item
-                self.finger_2 = equippable_entity
+                self.finger = equippable_entity
                 results.append({'equipped': equippable_entity})
 
         return results
